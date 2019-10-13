@@ -1,3 +1,5 @@
+
+import 'package:video_player/video_player.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
@@ -6,12 +8,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
-      home: new HomeScreen(),
+      home: new HomePage(),
     );
   }
 }
 
-class HomeScreen extends StatelessWidget {
+class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -21,9 +23,10 @@ class HomeScreen extends StatelessWidget {
         //   title: Text('ホーム'),
         //   centerTitle: true,
         // ),
-        body: Center(
-          child: Text('home screen'),
-        ),
+        // body: Center(
+        //   child: Text('home screen'),
+        // ),
+        body: VideoApp(),
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: 1,
           items: <BottomNavigationBarItem>[
@@ -44,7 +47,7 @@ class HomeScreen extends StatelessWidget {
             if (value == 2) {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => PersonalScreen()),
+                MaterialPageRoute(builder: (context) => PersonalPage()),
               );
             }
           }
@@ -57,7 +60,7 @@ class HomeScreen extends StatelessWidget {
 /*
  * unused stateless class
  */
-class UploadScreen extends StatelessWidget {
+class UploadPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,12 +69,40 @@ class UploadScreen extends StatelessWidget {
   }
 }
 
-class PersonalScreen extends StatelessWidget {
+class PersonalPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Text('personal screen'),
+        child: Card(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              const ListTile(
+                leading: Icon(Icons.school),
+                title: Text(
+                  'つなげる保育園',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                subtitle: Text('小磯園長がしゃきりに頑張る笑顔が絶えない保育園\n最新、電子レンジを買い替えました。'),
+              ),
+              ButtonTheme.bar( // make buttons use the appropriate styles for cards
+                child: ButtonBar(
+                  children: <Widget>[
+                    FlatButton(
+                      child: const Text('いいね'),
+                      onPressed: () { /* ... */ },
+                    ),
+                    FlatButton(
+                      child: const Text('フォロー'),
+                      onPressed: () { /* ... */ },
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: 2,
@@ -94,5 +125,69 @@ class PersonalScreen extends StatelessWidget {
         },
       ),
     );
+  }
+}
+
+class FollowPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+
+    );
+  }
+}
+
+class VideoApp extends StatefulWidget {
+  @override
+  _VideoAppState createState() => _VideoAppState();
+}
+
+class _VideoAppState extends State<VideoApp> {
+  VideoPlayerController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = VideoPlayerController.network(
+        'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4')
+      ..initialize().then((_) {
+        // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
+        setState(() {});
+      });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Video Demo',
+      home: Scaffold(
+        body: Center(
+          child: _controller.value.initialized
+              ? AspectRatio(
+                  aspectRatio: _controller.value.aspectRatio,
+                  child: VideoPlayer(_controller),
+                )
+              : Container(),
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            setState(() {
+              _controller.value.isPlaying
+                  ? _controller.pause()
+                  : _controller.play();
+            });
+          },
+          child: Icon(
+            _controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
+          ),
+        ),
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _controller.dispose();
   }
 }
