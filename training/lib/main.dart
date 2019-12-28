@@ -27,7 +27,9 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => FirstPage(),
         '/second': (context) => SecondPage(),
-        '/third': (context) => ThirdPage()
+        '/third': (context) => ThirdPage(),
+        '/forth': (context) => ForthPage(),
+        '/form': (context) => FormSamplePage()
       },
     );
   }
@@ -126,13 +128,13 @@ class FirstPage extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-            RaisedButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/second',
-                    arguments: 'messageFromFirstPage');
-              },
-              child: Text('Second Page'),
-            ),
+            // RaisedButton(
+            //   onPressed: () {
+            //     Navigator.pushNamed(context, '/second',
+            //         arguments: 'messageFromFirstPage');
+            //   },
+            //   child: Text('Second Page'),
+            // ),
             // Expanded(child: RaisedButton(
             //   onPressed: () {
             //   },
@@ -144,6 +146,18 @@ class FirstPage extends StatelessWidget {
                     arguments: 'messageFromFirstPage');
               },
               child: Text('Third Page'),
+            ),
+            RaisedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/forth');
+              },
+              child: Text('Forth Page'),
+            ),
+            RaisedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/form');
+              },
+              child: Text('Form Page'),
             ),
           ],
         ),
@@ -188,13 +202,13 @@ class ThirdPage extends StatelessWidget {
       //     child: Text('Go Back'),
       //   ),
       // ),
+
       body: GridView(
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          mainAxisSpacing: 8,
-          crossAxisSpacing: 16.0,
-          crossAxisCount: 3,
-          childAspectRatio: 2
-        ),
+            mainAxisSpacing: 8,
+            crossAxisSpacing: 16.0,
+            crossAxisCount: 3,
+            childAspectRatio: 2),
         scrollDirection: Axis.vertical,
         primary: false,
         padding: const EdgeInsets.all(32.0),
@@ -206,6 +220,93 @@ class ThirdPage extends StatelessWidget {
           myContainer('5'),
           myContainer('6')
         ],
+      ),
+
+      // body: SingleChildScrollView(
+      //   child: Column(
+      //     mainAxisAlignment: MainAxisAlignment.center,
+      //     children: <Widget>[
+      //       myContainer('dada'),
+      //       myContainer('dada'),
+      //       myContainer('dada'),
+      //       myContainer('dada'),
+      //       myContainer('dada'),
+      //       myContainer('dada'),
+      //       myContainer('dada'),
+      //       myContainer('dada'),
+      //     ],
+      //   ),
+      // ),
+    );
+  }
+}
+
+class ForthPage extends StatelessWidget {
+  Widget build(BuildContext context) {
+    var messageFromFirstPage = ModalRoute.of(context).settings.arguments;
+    print(messageFromFirstPage);
+    return Scaffold(
+      appBar: AppBar(title: const Text('Forth Page')),
+      body: PageView(
+        children: <Widget>[
+          Container(
+            color: Colors.pink,
+          ),
+          Container(
+            color: Colors.green,
+          ),
+          Container(
+            color: Colors.blue,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class FormSamplePage extends StatelessWidget {
+  final _formKey = GlobalKey<FormState>();
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(title: const Text('Form')),
+        body: Form(
+          key: _formKey,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: <Widget>[
+                TextFormField(
+                  decoration: const InputDecoration(
+                    filled: true,
+                    icon: Icon(Icons.person),
+                    hintText: '名前を入力して下さい',
+                    labelText: '名前'
+                  ),
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return '必須です';
+                    }
+                    return null;
+                  },
+                ),
+                RaisedButton(
+                  color: Colors.blue,
+                  textColor: Colors.white,
+                  onPressed: () {
+                    if (_formKey.currentState.validate()) {
+                      Scaffold.of(context).showSnackBar(const SnackBar(
+                        content: Text('Processing Data'),
+                      ));
+                    }
+                  },
+                  child: const Text('Sumbit'),
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }
