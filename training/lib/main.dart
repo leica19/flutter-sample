@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
@@ -131,6 +133,11 @@ class FirstPage extends StatelessWidget {
               },
               child: Text('Second Page'),
             ),
+            // Expanded(child: RaisedButton(
+            //   onPressed: () {
+            //   },
+            //   child: Text('to Where?'),
+            // )),
             RaisedButton(
               onPressed: () {
                 Navigator.pushNamed(context, '/third',
@@ -169,18 +176,47 @@ class ThirdPage extends StatelessWidget {
     print(messageFromFirstPage);
     return Scaffold(
       appBar: AppBar(title: const Text('Third Page')),
-      body: Container(
-        alignment: Alignment.center,
-        color: Colors.green,
-        width: 300,
-        height: 300,
-        child: RaisedButton(
-          onPressed: () {
-            Navigator.pop(context, 'messageFromSecondPage');
-          },
-          child: Text('Go Back'),
+      // body: Container(
+      //   alignment: Alignment.center,
+      //   color: Colors.green,
+      //   width: 300,
+      //   height: 300,
+      //   child: RaisedButton(
+      //     onPressed: () {
+      //       Navigator.pop(context, 'messageFromSecondPage');
+      //     },
+      //     child: Text('Go Back'),
+      //   ),
+      // ),
+      body: GridView(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          mainAxisSpacing: 8,
+          crossAxisSpacing: 16.0,
+          crossAxisCount: 3,
+          childAspectRatio: 2
         ),
+        scrollDirection: Axis.vertical,
+        primary: false,
+        padding: const EdgeInsets.all(32.0),
+        children: <Widget>[
+          myContainer('1'),
+          myContainer('2'),
+          myContainer('3'),
+          myContainer('4'),
+          myContainer('5'),
+          myContainer('6')
+        ],
       ),
     );
   }
+}
+
+Container myContainer(String text) {
+  return Container(
+    alignment: Alignment.center,
+    width: 100,
+    height: 100,
+    color: Colors.green,
+    child: Text(text),
+  );
 }
