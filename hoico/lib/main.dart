@@ -1,6 +1,7 @@
 
 import 'package:video_player/video_player.dart';
 import 'package:flutter/material.dart';
+// import 'camera.dart';
 
 void main() => runApp(MyApp());
 
@@ -23,16 +24,13 @@ class HomePage extends StatelessWidget {
         //   title: Text('ホーム'),
         //   centerTitle: true,
         // ),
-        // body: Center(
-        //   child: Text('home screen'),
-        // ),
         body: VideoApp(),
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: 1,
           items: <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: Icon(Icons.cloud_upload),
-              title: Text('アップロード'),
+              title: Text('投稿'),
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.home),
@@ -49,6 +47,11 @@ class HomePage extends StatelessWidget {
                 context,
                 MaterialPageRoute(builder: (context) => PersonalPage()),
               );
+            } else if (value == 0) {
+               Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => UploadPage()),
+              );
             }
           }
         ),
@@ -63,38 +66,118 @@ class HomePage extends StatelessWidget {
 class UploadPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-
+    return MaterialApp(
+    home: Scaffold(
+      body: Center(
+        child: Text('upload pages'),
+      ),
+      floatingActionButton: FloatingActionButton(
+      onPressed: () {
+        // Add your onPressed code here!
+      },
+      child: Icon(Icons.add),
+      backgroundColor: Colors.blue,
+    ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: 0,
+        items: <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Icons.cloud_upload),
+              title: Text('投稿'),
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              title: Text('ホーム'),
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person),
+              title: Text('プロフィール'),
+            ),
+          ],
+                onTap: (int value) {
+          if (value == 1) {
+            Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => HomePage()),
+              );
+          } else if (value == 2) {
+            Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => PersonalPage()),
+              );
+          }
+        },
+      ),
+    ),
     );
   }
 }
 
+Widget titleSection = Container(
+  padding: const EdgeInsets.all(32),
+  child: Row(
+    children: [
+      Expanded(
+        /*1*/
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            /*2*/
+            Container(
+              padding: const EdgeInsets.only(bottom: 8),
+              child: Text(
+                'つなげるKids保育',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            Text(
+              '大阪府吹田市広芝町10番25号 第2池上ビル1階',
+              style: TextStyle(
+                color: Colors.grey[500],
+              ),
+            ),
+          ],
+        ),
+      ),
+      /*3*/
+      Icon(
+        Icons.star,
+        color: Colors.red[500],
+      ),
+      Text('41'),
+    ],
+  ),
+);
+
 class PersonalPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return MaterialApp(
+    home: Scaffold(
       body: Center(
         child: Card(
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              const ListTile(
-                leading: Icon(Icons.school),
-                title: Text(
-                  'つなげる保育園',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                subtitle: Text('小磯園長がしゃきりに頑張る笑顔が絶えない保育園\n最新、電子レンジを買い替えました。'),
+              Image.asset(
+                'images/tunagel.jpg'
               ),
+              titleSection,
               ButtonTheme.bar( // make buttons use the appropriate styles for cards
                 child: ButtonBar(
                   children: <Widget>[
                     FlatButton(
-                      child: const Text('いいね'),
-                      onPressed: () { /* ... */ },
+                      child: const Text('投稿'),
+                      onPressed: () {},
                     ),
                     FlatButton(
                       child: const Text('フォロー'),
+                      onPressed: () { /* ... */ },
+                    ),
+                    FlatButton(
+                      child: const Text('フォロワー'),
                       onPressed: () { /* ... */ },
                     ),
                   ],
@@ -109,7 +192,7 @@ class PersonalPage extends StatelessWidget {
         items: <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: Icon(Icons.cloud_upload),
-              title: Text('アップロード'),
+              title: Text('投稿'),
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.home),
@@ -121,9 +204,20 @@ class PersonalPage extends StatelessWidget {
             ),
           ],
         onTap: (int value) {
-          if (value == 1) Navigator.pop(context);
+          if (value == 0) {
+            Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => UploadPage()),
+              );
+          } else if (value == 1) {
+            Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => HomePage()),
+              );
+          }
         },
       ),
+    ),
     );
   }
 }
@@ -191,3 +285,4 @@ class _VideoAppState extends State<VideoApp> {
     _controller.dispose();
   }
 }
+
