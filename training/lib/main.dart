@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.blue,       
       ),
       darkTheme: ThemeData(brightness: Brightness.dark),
       initialRoute: '/',
@@ -47,17 +47,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
       appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+        title: const Text('First Page'),
       ),
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
@@ -99,18 +91,24 @@ class FirstPage extends StatelessWidget {
               },
               child: Text('Third Page'),
             ),
-            RaisedButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/forth');
-              },
-              child: Text('Forth Page'),
-            ),
+            // RaisedButton(
+            //   onPressed: () {
+            //     Navigator.pushNamed(context, '/forth');
+            //   },
+            //   child: Text('Forth Page'),
+            // ),
             RaisedButton(
               onPressed: () {
                 Navigator.pushNamed(context, '/form');
               },
               child: Text('Form Page'),
             ),
+            RaisedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/material');
+              },
+              child: Text('Material Page'),
+            )
           ],
         ),
       ),
@@ -164,6 +162,46 @@ class ThirdPage extends StatelessWidget {
   }
 }
 
+class MaterialPage extends StatelessWidget {
+  Widget build(BuildContext context) {
+    var messageFromFirstPage = ModalRoute.of(context).settings.arguments;
+    print(messageFromFirstPage);
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Material Page'),
+        actions: <Widget>[
+          PopupMenuButton<String>(
+            itemBuilder: (BuildContext context) => <PopupMenuItem<String>>[
+              const PopupMenuItem<String>(
+                value: 'Toolbar Menu',
+                child: Text('Toolbar Menu'),
+              ),
+              const PopupMenuItem<String>(
+                value: 'Hoge Menu',
+                child: Text('Hoge Menu'),
+              ),
+            ],
+          )
+        ],
+        ),
+        body: Center(
+          child: Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16.0)
+            ),
+            child: Column(
+              children: <Widget>[
+                const ListTile(
+                  leading: Icon(Icons.album),
+                  title: Text('title'),
+                ),
+              ],
+            ),
+          ),
+        )
+    );
+  }
+}
 class ForthPage extends StatelessWidget {
   Widget build(BuildContext context) {
     var messageFromFirstPage = ModalRoute.of(context).settings.arguments;
