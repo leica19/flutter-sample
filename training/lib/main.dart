@@ -21,7 +21,8 @@ class MyApp extends StatelessWidget {
         '/second': (context) => SecondPage(),
         '/third': (context) => ThirdPage(),
         // '/forth': (context) => ForthPage(),
-        '/form': (context) => MainFetchData()
+        '/form': (context) => MainFetchData(),
+        '/material': (context) => MaterialPage()
       },
     );
   }
