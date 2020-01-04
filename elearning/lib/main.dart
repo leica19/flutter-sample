@@ -113,24 +113,9 @@
 // // }
 
 import 'package:flutter/material.dart';
-
-class ProfilePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text('ProfilePage'),
-    );
-  }
-}
-
-class HomePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text('HomePage'),
-    );
-  }
-}
+import 'ProfilePage.dart';
+import 'HomePage.dart';
+import 'NewsPage.dart';
 
 Widget switchPageOnIndex(int index) {
   switch (index) {
@@ -138,16 +123,18 @@ Widget switchPageOnIndex(int index) {
       return ProfilePage();
     case 1:
       return HomePage();
+    case 2:
+      return NewsPage();
   }
 }
 
 void main() => runApp(MainApp());
 
 class MainApp extends StatefulWidget {
-  createState() => MainAppState();
+  _MainAppState createState() => new _MainAppState();
 }
 
-class MainAppState extends State<MainApp> {
+class _MainAppState extends State<MainApp> {
   int _selectedIndex = 0;
 
   void _onItemTapped(int index) {
@@ -172,7 +159,12 @@ class MainAppState extends State<MainApp> {
                 title: Text('プロフィール'),
               ),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.home), title: Text('ホーム'))
+                  icon: Icon(Icons.home), title: Text('ホーム')
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.list),
+                title: Text('ニュース')
+              )
             ],
             currentIndex: _selectedIndex,
             onTap: _onItemTapped,
