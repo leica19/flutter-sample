@@ -19,11 +19,12 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text('Layouts'),
-        ),
-        backgroundColor: Colors.white,
-        body: _buildBody());
+      appBar: AppBar(
+        title: Text('Layouts'),
+      ),
+      backgroundColor: Colors.white,
+      body: _buildBody(),
+    );
   }
 }
 
@@ -105,9 +106,6 @@ Row _buildJournalFooterImages() {
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: <Widget>[
-      CircleAvatar(
-        radius: 40.0,
-      ),
       CircleAvatar(
         radius: 40.0,
       ),

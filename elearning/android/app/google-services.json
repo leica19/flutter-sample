@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "315617562447",
+    "firebase_url": "https://flutter-elearning.firebaseio.com",
+    "project_id": "flutter-elearning",
+    "storage_bucket": "flutter-elearning.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:315617562447:android:6d6df5dec72b2b32a0bf3a",
+        "android_client_info": {
+          "package_name": "com.example.elearning"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "315617562447-rs55dqqmnovf6tdi052ijcetf3vumg01.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBLXy_XczwlB8BTiw1FMkXiHPV_O6ou3ag"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "315617562447-rs55dqqmnovf6tdi052ijcetf3vumg01.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
